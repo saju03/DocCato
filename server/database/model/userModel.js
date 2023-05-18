@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import crypto from 'crypto'
 const userSchema = new Schema({
     userName: {
         type: String,
@@ -14,9 +15,18 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'password is required']
     },
-    emailVerification: {
+    UUID: {
+        type: String,
+        default:crypto.randomBytes(32).toString('hex')
+    },
+    verified: {
         type: Boolean,
+        default:false
      },
+     created:{
+        type:Date,
+        default:new Date()
+     }
 
 })
 

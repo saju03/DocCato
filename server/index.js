@@ -4,6 +4,12 @@ import conncetDB from './database/connection.js'
 import cors from 'cors'
 import {userRouter} from './routes/userRoutes.js'
 import { doctorRoutes } from './routes/doctorRoutes.js'
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export {__dirname}
 
 conncetDB();
 const app = express()
@@ -15,8 +21,7 @@ app.use(
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
     credentials:true,
 }))
-
-app.use('/',userRouter)
+app.use('/user',userRouter)
 app.use('/doctor',doctorRoutes)
 
 

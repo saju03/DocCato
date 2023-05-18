@@ -1,4 +1,4 @@
-import jwt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 const maxAge = 864000  /* 10 days */
 
 const createToken = (id)=>{
@@ -7,6 +7,7 @@ const createToken = (id)=>{
         expiresIn:maxAge,
     })  
     } catch (error) {
+        console.log(error);
         console.log('tocken error');
     }
 
