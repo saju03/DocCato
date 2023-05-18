@@ -47,12 +47,12 @@ function Register ()  {
             }else{
                 console.log('user');
                 
-                const  {data}  = await axios.post('http://localhost:3000/register',{...userValues},{withCredentials:true})
+                const  {data}  = await axios.post('http://localhost:3000/user/register',{...userValues},{withCredentials:true})
                 if(data.created){
-                    navigate('/login')
+                   swal(data.message)
+                   setValues({email:"",password:"",userName:''})
                 }
-    
-                }
+             }
             
             
         } catch (error) {

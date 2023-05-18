@@ -1,17 +1,31 @@
 
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Link, useNavigate } from 'react-router-dom'
 // import LoginPopup from '../../userPages/LoginPopup';
 
 
 function Navbar() {
 const navigate = useNavigate();
+const [cookies, setCookie , removeCookie] = useCookies();
+const[userLoggedIn,setUserLogged] = useState(false)
 
 
-
-
+useEffect(()=>{
+  if(cookies.user_jwt){
+    setUserLogged(true)
+}
+},[])
   const handleLoginBtn = (e)=>{
     e.preventDefault()
     navigate('/login')
+
+
+    }
+
+    const handleLogOutBtn = ()=>{
+      removeCookie('user_jwt')
+      setUserLogged(false)
     }
 
   return (
@@ -79,7 +93,8 @@ const navigate = useNavigate();
         </li>
         <li>
           {/* <LoginPopup /> */}
-          <button onClick={handleLoginBtn} className="text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-sky-700 dark:focus:ring-primary-800">Login</button>
+          {userLoggedIn ? <button onClick={handleLogOutBtn} className="text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-sky-700 dark:focus:ring-primary-800">Logout</button> :  <button onClick={handleLoginBtn} className="text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-1.5 text-center dark:bg-blue-600 dark:hover:bg-sky-700 dark:focus:ring-primary-800">Login</button>}
+         
 
         </li>
       </ul>

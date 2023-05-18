@@ -38,7 +38,7 @@ function Login() {
 
       try {
         const { data } = await axios.post(
-          "http://localhost:3000/login",
+          "http://localhost:3000/user/login",
           { ...loginDetails },
           { withCredentials: true }
         );
@@ -62,7 +62,7 @@ function Login() {
     const jwt = cookies;
     if (jwt.user_jwt) {
       try {
-        const { data } = await axios.get("http://localhost:3000", {
+        const { data } = await axios.get("http://localhost:3000/user", {
           withCredentials: true,
         });
         if (data.status) {
