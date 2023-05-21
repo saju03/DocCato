@@ -6,9 +6,9 @@ import {userRouter} from './routes/userRoutes.js'
 import { doctorRoutes } from './routes/doctorRoutes.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { adminRoutes } from './routes/adminRouter.js'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 export {__dirname}
 
 conncetDB();
@@ -23,6 +23,7 @@ app.use(
 }))
 app.use('/user',userRouter)
 app.use('/doctor',doctorRoutes)
+app.use('/admin',adminRoutes)
 
 
 app.listen(process.env.PORT|| 3000,()=>console.log(`server is running on port ${process.env.PORT}` ))

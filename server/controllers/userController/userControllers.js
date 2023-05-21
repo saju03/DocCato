@@ -55,12 +55,25 @@ const userLogin = async (req, res, next) => {
                 expiresIn: 864000,
 
             })
-            res.cookie('user_jwt', token, {
-                withCrdentials: true,
-                httpOnly: false,
-                maxAge: 864000000
-            });
-            res.status(200).json({ status: true })
+            if (verifyCredentials.isDoc) {
+                res.cookie('doctor_jwt', token, {
+                    withCrdentials: true,
+                    httpOnly: false,
+                    maxAge: 864000000
+                });
+                res.status(200).json({ status: true, isDoc: true })
+
+            } else {
+                res.cookie('user_jwt', token, {
+                    withCrdentials: true,
+                    httpOnly: false,
+                    maxAge: 864000000
+                });
+                res.status(200).json({ status: true, isDoc: false })
+
+            }
+
+
         } catch (error) {
             console.log('tocken error');
             console.log(error);
@@ -76,8 +89,6 @@ const userLogin = async (req, res, next) => {
         }
 
     }
-
-
 }
 
 
@@ -85,12 +96,25 @@ const verifyUser = async (req, res, next) => {
 
     const Verification = await verifyEmail(req.params)
     if (Verification.status) {
-        res.cookie('user_jwt', Verification.token, {
+
+        if(Verification.isDoc){
+            res.cookie('doctor_jwt', Verification.token, {
+                withCrdentials: true,
+                httpOnly: false,
+                maxAge: 864000000
+            });
+       
+            res.sendFile(__dirname + '/public/emailverifieddoc.html');
+        }else{
+              res.cookie('user_jwt', Verification.token, {
             withCrdentials: true,
             httpOnly: false,
             maxAge: 864000000
         });
+        
         res.sendFile(__dirname + '/public/emailverified.html');
+        }
+
 
     } else {
         res.json({ res: 'time expired' })

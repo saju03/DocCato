@@ -26,6 +26,10 @@ const userSchema = new Schema({
      created:{
         type:Date,
         default:new Date()
+     },
+     access:{
+        type:Boolean,
+        default:true
      }
 
 })

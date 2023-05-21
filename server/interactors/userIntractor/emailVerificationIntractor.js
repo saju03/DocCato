@@ -5,12 +5,20 @@ import createToken from "../Helpers/tokenGenerator.js";
 verifyUserByuid
 const verifyEmail =async (uid)=>{
  const verification = await verifyUserByuid(uid);
+ console.log(verification);
  if(verification.status){
-    
-const Token = await createToken(verification.id)
-return {token:Token,status:true}
+    if(verification.isDoc){
+      const Token = await createToken(verification.id)
+return {token:Token,status:true,isDoc:true}
+    }else{
+      const Token = await createToken(verification.id)
+return {token:Token,status:true,isDoc:false}
+    }
+
  }else{
     console.log('email verification error');
+
+    return {status:true}
  }
 }
 export default verifyEmail

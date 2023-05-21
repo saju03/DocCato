@@ -7,7 +7,10 @@ const verifyUserCredentials = async (credentials) => {
      if (user.status) {
     const status = await comparePassword(credentials.password, user.password)
             if (status) {
-                return ({ status: true, id: user._id })
+               if( user.isDoc){
+                return ({ status: true, id: user._id ,isDoc:true})
+                }
+                return ({ status: true, id: user._id, isDoc:false })
             } else {
                 return ({ status: false, message: 'incorrect password' })
             }

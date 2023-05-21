@@ -1,0 +1,22 @@
+
+  const [access, setaccess] = useState()
+
+
+  const HandleAction = async (e) => {
+    setaccess(!access)
+    try {
+      const email = e.target.value
+      const { data } = await axios.post("http://localhost:3000/admin/block-user", { email }, {
+        withCredentials: true,
+      });
+      if (data.status) {
+        swal(data.message)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+
+    useEffect(() => {
+      console.log('asdfasdfadfasdf');
+    }, [])

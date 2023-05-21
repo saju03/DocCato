@@ -2,6 +2,7 @@ import DocPersistance from '../../persistence/doctorLayer/createDocPersistance.j
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import handelErrors from '../../middlewares/errorHandelers.js'
+import sendMail from '../Helpers/sendEmail.js'
 const maxAge = 864000  /* 10 days */
 
 
@@ -26,14 +27,15 @@ const createToken = (id)=>{
     }
 
 }
-const createDoctor = async (username,email,password)=>{
+const createDoctor = async (username,email,password,licence)=>{
 
  const hashedPassword = await hashPassword(password)
 
 
- const addedDoc = await DocPersistance(username,email,hashedPassword)
+ const addedDoc = await DocPersistance(username,email,hashedPassword,licence)
  if(addedDoc.status){
     const token =  createToken(addedDoc.id)
+    const emailverify = await sendMail(addedDoc.email,addedDoc.UUID)
     const doc = {
         token:token,
         status:true
