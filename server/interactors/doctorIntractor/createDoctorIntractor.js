@@ -2,7 +2,7 @@ import DocPersistance from '../../persistence/doctorLayer/createDocPersistance.j
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import handelErrors from '../../middlewares/errorHandelers.js'
-import sendMail from '../Helpers/sendEmail.js'
+import {sendMail} from '../Helpers/sendEmail.js'
 const maxAge = 864000  /* 10 days */
 
 

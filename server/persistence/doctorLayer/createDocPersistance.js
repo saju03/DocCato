@@ -5,8 +5,10 @@ const createDoctor = async (doctorName,email,password,licence)=>{
   try {
 
     const userCheck = await User.findOne({email:email})
+console.log(userCheck);
 
     if(userCheck){
+     
    const  duplicateUser= {
         status:false,
         code:11000,
@@ -17,6 +19,8 @@ const createDoctor = async (doctorName,email,password,licence)=>{
     }
 
       const doc = await Doctor.create({doctorName,email,licence,password})
+      console.log(doc);
+      console.log('adfasdfasdfsdfasdf');
       doc.status = true;
      return doc
 

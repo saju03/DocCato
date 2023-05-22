@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import Axios from "../../axios";
 
 function AdminLogin() {
     const [loginDetails, setDetails] = useState({
@@ -16,7 +17,7 @@ function AdminLogin() {
         const jwt = cookies;
         if (jwt.admin_jwt) {
           try {
-            const { data } = await axios.get("http://localhost:3000/admin", {
+            const { data } = await Axios.get("admin", {
               withCredentials: true,
             });
             if (data.status) {

@@ -32,7 +32,15 @@ const doctorSchema = new Schema({
     doctorAccess:{
         type:Boolean,
         default:false
-    }
+    },
+    created:{
+        type:Date,
+        default:new Date()
+     },
+     consultPermission:{
+        type:Boolean,
+        default:false
+     }
 
 })
 

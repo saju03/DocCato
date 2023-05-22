@@ -7,6 +7,7 @@ const findAdmin = async (id) => {
             return ({ status: true})
         } else {
            return ({ status: false })
+           
         }
     } catch (error) {
         console.log(error);

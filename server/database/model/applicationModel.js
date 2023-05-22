@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import crypto from'crypto'
+import uuid from 'uuid-random';
 const applicationSchema = new Schema({
     fullName: {
         type: String,
@@ -24,7 +24,7 @@ const applicationSchema = new Schema({
     },
     UUID: {
         type: String,
-        default:crypto.randomBytes(32).toString('hex')
+        default:uuid()
     },
     certificateNo: {
         
@@ -43,6 +43,14 @@ const applicationSchema = new Schema({
     },
     exp:{
         type:Number,
+        default:false
+    },
+    postedDate:{
+        type:Date,
+        default:new Date()
+    },
+    isApproved:{
+        type:Boolean,
         default:false
     },
 

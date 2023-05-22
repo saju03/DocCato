@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import Tables from "../components/Usertable/UserTable";
+import Axios from "../../axios";
 function AdminDashbord() {
     const [cookies, setCookies, removeCookie] = useCookies();
     const navigate = useNavigate()
@@ -12,7 +13,7 @@ function AdminDashbord() {
         const jwt = cookies;
         if (jwt.admin_jwt) {
           try {
-            const { data } = await axios.get("http://localhost:3000/admin", {
+            const { data } = await Axios.get("admin", {
               withCredentials: true,
             });
             if (!data.status) {

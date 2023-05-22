@@ -2,7 +2,7 @@ import userPersistance from '../../persistence/userLayer/createUserPersistence.j
 import handelErrors from '../../middlewares/errorHandelers.js';
 import createToken from '../Helpers/tokenGenerator.js';
 import hashPassword from '../Helpers/hashPassword.js';
-import sendMail from '../Helpers/sendEmail.js';
+import {sendMail} from '../Helpers/sendEmail.js';
 
 
 const createUser = async (username,email,password)=>{

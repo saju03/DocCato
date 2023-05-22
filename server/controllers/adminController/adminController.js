@@ -1,5 +1,8 @@
 import adminLoginIntractor from "../../interactors/adminIntractors/adminLoginIntractor.js";
+import applicationIntractor from "../../interactors/adminIntractors/applicationUpdateIntractor.js";
 import blockUser from "../../interactors/adminIntractors/blockUserIntractor.js";
+import getApplicaions from "../../interactors/adminIntractors/getAllApplicationsIntractor.js";
+import getAllDoctorIntractor from "../../interactors/adminIntractors/getAllDoctorIntractor.js";
 import getAlluserIntractor from "../../interactors/adminIntractors/getAllUserIntractor.js";
 import authenicateAdmin from "../../middlewares/adminAuthentication.js";
 
@@ -45,6 +48,21 @@ const getAllUsers = async (req,res,next)=>{
 
 }
 
+const getAllDoctor = async (req,res,next)=>{
+
+  
+    const allDoctors = await getAllDoctorIntractor()
+    if(allDoctors){
+        res.status(200).json({data:allDoctors})
+    }else{
+        res.status(500)
+    }
+
+    
+
+}
+
+
 const blockUserByEmail = async (req,res,next)=>{
     const user  = await blockUser(req.body.email)
     if(user.status){
@@ -52,5 +70,21 @@ const blockUserByEmail = async (req,res,next)=>{
     }
 }
 
+const getAllApplications = async(req,res,next)=>{
+        const applications = await getApplicaions()
+        if(applications.status){
+            res.status(200).json({status:true,data:applications})
+        }
+}
 
-export {adminLogin,verifyAdmin,getAllUsers,blockUserByEmail}
+const updateApplication = async (req,res,next)=>{
+   
+    const {id,approved} = req.body
+    console.log(req.body);
+    console.log(id);
+    const applicaionUpdate= await applicationIntractor(id,approved)
+
+}
+
+
+export {adminLogin,verifyAdmin,getAllUsers,blockUserByEmail,getAllDoctor,getAllApplications,updateApplication}

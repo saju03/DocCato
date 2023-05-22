@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
     Card,
     CardHeader,
@@ -7,44 +8,44 @@ import {
     Button,
   } from "@material-tailwind/react";
   import PropTypes, { any } from 'prop-types';
+  import axios from "axios";
   import swal from "sweetalert";
   import { useEffect, useState } from "react";
-import Axios from "../../../axios";
-  
-  export function DoctorTables() {
-    const [userDatas, setUserData] = useState([])
+import ApplicationModal from "../modal/ApplicationModal";
+
+  export function ApplicationTable() {
+    const [applications, setApplications] = useState([])
     
-    const [userD, setUserD] = useState(true)
-    const getAllUsers = async () => {
+    const [D, setD] = useState(true)
+    const getAllApplications = async () => {
       try {
-        const { data } = await Axios.get("admin/get-all-doctors", {
+        const { data } = await axios.get("http://localhost:3000/admin/get-all-application", {
           withCredentials: true,
   
         });
-        console.log(data);
-        setUserData(data.data)
-    
-        
+        setApplications(data.data)
+   
       } catch (error) {
         console.log(error);
       }
     }
   
     useEffect(() => {
-      getAllUsers()
+        getAllApplications()
   
-    }, [userD])
+    }, [D])
     
     const HandleAction = async (e) => {
-      setUserD(!userD)
+      setD(!D)
   
   
       try {
         const email = e.target.value
-        const { data } = await Axios.post("admin/block-user", { email }, {
+        const { data } = await axios.post("http://localhost:3000/admin/block-user", { email }, {
           withCredentials: true,
         });
         if (data.status) {
+            
           swal('Action Performed')
          
         }
@@ -61,14 +62,15 @@ import Axios from "../../../axios";
         <Card>
           <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
             <Typography variant="h6" color="white">
-              Doctors Table
-            </Typography>
+              Pending Applicaions
+              
+              </Typography>
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
               <thead>
                 <tr>
-                  {["Doctor", "licence", "access", 'Verified', "action"].map((el) => (
+                  {["Doctor Name ", "Certificate no",  "phone",'register no', "Applied Date",'year of exp','view'].map((el) => (
                     <th
                       key={el}
                       className="border-b border-blue-gray-50 py-3 px-5 text-left"
@@ -84,15 +86,15 @@ import Axios from "../../../axios";
                 </tr>
               </thead>
               <tbody  >
-                {userDatas.map(
-                  ({ verified, doctorName, email, licence,UUID, access,doctorAccess, created }, key) => {
-                    const className = `py-3 px-5 ${key === access
+                {applications.map(
+                  (e, key) => {
+                    const className = `py-3 px-5 ${key === e.UUID
                         ? ""
                         : "border-b border-blue-gray-50"
                       }`;
   
                     return (
-                      <tr key={UUID}>
+                      <tr key={e.UUID}>
   
                         <td className={className} >
                           <div className="flex items-center gap-4">
@@ -102,41 +104,46 @@ import Axios from "../../../axios";
                                 color="blue-gray"
                                 className="font-semibold"
                               >
-                                {doctorName}
+                                {e.fullName}
                               </Typography>
                               <Typography className="text-xs font-normal text-blue-gray-500">
-                                {email}
+                                {e.speciality}
                               </Typography>
                             </div>
                           </div>
                         </td>
                         <td className={className}>
                           <Typography className="text-xs font-semibold text-blue-gray-600">
-                            {licence}
+                            {e.certificateNo}
                           </Typography>
                           <Typography className="text-xs font-normal text-blue-gray-500">
-                            {created}
+                            {e.medicalCouncil}
                           </Typography>
                         </td>
+                        <td  className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">
+                            {e.phone}
+                          </Typography>
+                        </td>
+                        <td  className={className}>
+                        <Typography className="text-xs font-semibold text-blue-gray-600">
+                            {e.registrationNo}
+                          </Typography>
+                        </td>
+                      
                         <td className={className}>
-                          <Chip
-                            variant="gradient"
-                            color={doctorAccess ? "green" : "blue-gray"}
-                            value={doctorAccess ? "allowed" : "denied"}
-                            className="py-0.5 px-2 text-[11px] font-medium"
-                          />
+                          <Typography className="text-xs font-semibold text-blue-gray-600">
+                            {e.postedDate.substring(0,10) }
+                          </Typography>
                         </td>
                         <td className={className}>
                           <Typography className="text-xs font-semibold text-blue-gray-600">
-                            {verified ? "true" : 'false'}
+                            {e.exp }
                           </Typography>
                         </td>
                         <td className={className}>
-                          <Button
-                            className="text-xs font-semibold text-white" value={email} onClick={HandleAction}>
-  
-                            {doctorAccess?'block':'unblodk'}
-                          </Button>
+                        
+                         <ApplicationModal props={e}/>
                         </td>
                       </tr>
                     );
@@ -152,9 +159,9 @@ import Axios from "../../../axios";
   
   
   }
-  DoctorTables.propTypes = {
-    userDatas: PropTypes.arrayOf(any)
+  ApplicationTable.propTypes = {
+    userDatas: PropTypes.objectOf(any)
   }
-  export default DoctorTables;
+  export default ApplicationTable;
   
   

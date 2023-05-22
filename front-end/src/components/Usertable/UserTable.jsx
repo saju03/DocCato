@@ -53,14 +53,14 @@ export function Tables() {
 
   }
   return (
-    <div className="mt-12 mb-8 flex flex-col gap-12  mx-4 mb-96">
+    <div className="mt-12 mb-8 flex flex-col gap-12  mx-4 mb-64 ">
       <Card>
         <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
           <Typography variant="h6" color="white">
             Users Table
           </Typography>
         </CardHeader>
-        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
+        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 h-96">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>

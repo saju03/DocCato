@@ -10,6 +10,8 @@ import Onboarding from './doctorPages/onbordpage/Onboarding'
 import AdminDashbord from './adminPages/AdminDashbord'
 
 import AdminLogin from './adminPages/AdminLogin'
+import DoctorTables from './components/doctorTable/DoctorTable'
+import ApplicationTable from './components/applicationTables/ApplicationTable'
 
 
 function App() {
@@ -97,7 +99,11 @@ function App() {
             },
             {
               path:'/admin/doctors',
-              element:''
+              element:<DoctorTables/>
+            },
+            {
+              path:'/admin/applications',
+              element:<ApplicationTable/>
             }
         ]
     }

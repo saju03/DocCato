@@ -7,12 +7,8 @@ function AdminNav() {
   fluid={true}
   rounded={true}
 >
-  <Navbar.Brand href="https://flowbite.com/">
-    <img
-      src="https://flowbite.com/docs/images/logo.svg"
-      className="mr-3 h-6 sm:h-9"
-      alt="Flowbite Logo"
-    />
+  <Navbar.Brand >
+
     <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
       DOCATO ADMIN
     </span>
@@ -33,9 +29,9 @@ function AdminNav() {
     <Link to={"/admin/doctors"}  className="dark:text-white">
       Doctors
     </Link>
-    <Navbar.Link href="/navbars"  className="dark:text-white">
+    <Link to={"/admin/applications"}  className="dark:text-white">
       Applications
-    </Navbar.Link>
+    </Link>
 
   </Navbar.Collapse>
 
