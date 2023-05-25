@@ -3,8 +3,7 @@ import findUser from '../persistence/userLayer/findUserByIdPersistance.js';
 const authenicateUser = async (cookie) => {
     try {
         const decodedCookie = await jwt.decode(cookie);
-        console.log(decodedCookie);
-        const userDetails = await findUser(decodedCookie.id)
+          const userDetails = await findUser(decodedCookie.id)
         if (userDetails.status) {
             return userDetails
         } else {

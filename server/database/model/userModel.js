@@ -15,6 +15,10 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'password is required']
     },
+    profileImage: {
+        type: String,
+       
+    },
     UUID: {
         type: String,
         default:crypto.randomBytes(32).toString('hex')
@@ -30,7 +34,11 @@ const userSchema = new Schema({
      access:{
         type:Boolean,
         default:true
-     }
+     },
+     phone:{
+        type:Number,
+  
+     },
 
 })
 

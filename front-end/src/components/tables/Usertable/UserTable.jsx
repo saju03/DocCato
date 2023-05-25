@@ -47,6 +47,7 @@ export function Tables() {
         swal(data.message)
        
       }
+      getAllUsers()
     } catch (error) {
       console.log(error);
     }

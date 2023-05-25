@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import Tables from "../components/Usertable/UserTable";
+import Tables from "../components/tables/Usertable/UserTable";
 import Axios from "../../axios";
 function AdminDashbord() {
     const [cookies, setCookies, removeCookie] = useCookies();

@@ -2,13 +2,13 @@
 import { Button, Modal } from "flowbite-react"
 import React, { useState } from "react"
 import Axios from "../../../axios"
+import swal from "sweetalert"
 
 
 function ApplicationModal({ props }) {
-
     const [show, setShow] = useState(false)
-    const handleShow = (e) => {
-        e.preventDefault()
+    const handleShow = () => {
+
         setShow(!show)
     }
 
@@ -18,12 +18,29 @@ function ApplicationModal({ props }) {
         try {
             const { data } = await Axios.post('admin/application-update', { id: props._id, approved: true }, { withCredentials: true })
             console.log(data);
+            if(data?.applicaionUpdate?.status){
+                swal(data?.applicaionUpdate?.message)
+                handleShow()
+               
+            }
         } catch (error) {
             console.log(error);
         }
     }
-    const handleDecline = (e) => {
+    const handleDecline = async (e) => {
         e.preventDefault();
+
+        try {
+            const { data } = await Axios.post('admin/application-update', { id: props._id, approved: false }, { withCredentials: true })
+            console.log(data);
+            if(data?.applicaionUpdate?.status){
+                swal(data?.applicaionUpdate?.message)
+                handleShow()
+               
+            }
+        } catch (error) {
+            console.log(error);
+        }
 
     }
     return (

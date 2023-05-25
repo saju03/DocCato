@@ -3,10 +3,14 @@ import getApplication from "../../persistence/adminLayer/getAllApplicationsPresi
 const getApplicaions = async ()=>{
 const application = await getApplication()
 if(application.status){
-    application.filter((e)=>{
-        
-    })
-    return application
+
+const allApplication = application.filter((e)=>{
+    return !e.isApproved
+})
+
+application.status = true
+
+   return allApplication
 }
 
 }

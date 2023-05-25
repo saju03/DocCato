@@ -1,28 +1,32 @@
 import { createBrowserRouter,Outlet,RouterProvider } from 'react-router-dom'
-import Navbar from './components/navbar/Navbar'
+import UserNavbar from './components/Nav/navbar/Navbar'
 import Footer from './components/footer/Footer'
-import AdminNav from './components/adminNav/AdminNav'
+import AdminNav from './components/Nav/adminNav/AdminNav'
 import Dashboard from './userPages/Dashboard'
 import Login from './userPages/Login'
 import Register from './userPages/Register'
 import DoctorDashbord from './doctorPages/DoctorDashbord'
 import Onboarding from './doctorPages/onbordpage/Onboarding'
 import AdminDashbord from './adminPages/AdminDashbord'
-
+import { Provider } from 'react-redux'
+import store from './utils/Store'
 import AdminLogin from './adminPages/AdminLogin'
-import DoctorTables from './components/doctorTable/DoctorTable'
-import ApplicationTable from './components/applicationTables/ApplicationTable'
+import DoctorTables from './components/tables/doctorTable/DoctorTable'
+import ApplicationTable from './components/tables/applicationTables/ApplicationTable'
+import Profile from './components/profile/Profile'
+import DocNavbars from './doctorPages/docNav/DocNavbar'
+import ResetPasswordPage from './components/forgotpage/ResetPasswordPage'
 
 
-function App() {
+function App() { 
   
   const AppLayout = ()=>{
     return (
-   <>
-   <Navbar />
+   <Provider store={store}>
+   <UserNavbar />
    <Outlet />
    <Footer/>
-   </>
+   </Provider>
 
   )
 
@@ -31,9 +35,11 @@ function App() {
   const DoctorLayout = ()=>{
     return(
         <>
-   <Navbar />
+         <Provider store={store}>
+   <DocNavbars />
    <Outlet />
    <Footer/>
+   </Provider>
    </>
     )
   }
@@ -65,6 +71,14 @@ function App() {
           path:'/register',
           element:<Register/>
         },
+        {
+          path:'/profile',
+          element:<Profile/>
+        },
+        {
+          path:'/user/:id/passwordRecovery',
+          element:<ResetPasswordPage/>
+        }
       ]
     },
     {

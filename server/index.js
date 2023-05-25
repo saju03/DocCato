@@ -7,12 +7,14 @@ import { doctorRoutes } from './routes/doctorRoutes.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { adminRoutes } from './routes/adminRouter.js'
+import { log } from 'console'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 export {__dirname}
 
 conncetDB();
 const app = express()
+app.use(express.static('images'))
 app.use(cookieParser())
 app.use(express.json());
 app.use(
@@ -21,6 +23,9 @@ app.use(
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
     credentials:true,
 }))
+// for static files rendering 
+app.get('/',(req,res)=>{res.status(200)})
+
 app.use('/user',userRouter)
 app.use('/doctor',doctorRoutes)
 app.use('/admin',adminRoutes)

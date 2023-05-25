@@ -68,23 +68,35 @@ const blockUserByEmail = async (req,res,next)=>{
     if(user.status){
         res.status(200).json({status:true,message:'user has been blocked'})
     }
+    else{
+        res.status(500)
+    }
 }
 
 const getAllApplications = async(req,res,next)=>{
         const applications = await getApplicaions()
-        if(applications.status){
+        
+        if(applications){
             res.status(200).json({status:true,data:applications})
+        }
+        else{
+            res.status(500)
         }
 }
 
 const updateApplication = async (req,res,next)=>{
    
     const {id,approved} = req.body
-    console.log(req.body);
-    console.log(id);
     const applicaionUpdate= await applicationIntractor(id,approved)
+    if(applicaionUpdate.status){
+        res.status(200).json({applicaionUpdate})
+    }
+    else{
+        res.status(500)
+    }
 
 }
+
 
 
 export {adminLogin,verifyAdmin,getAllUsers,blockUserByEmail,getAllDoctor,getAllApplications,updateApplication}

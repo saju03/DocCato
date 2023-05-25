@@ -1,37 +1,70 @@
+import { Input } from "@material-tailwind/react"
+import { useEffect, useState } from "react"
+import Axios from "../../../axios"
+
+
+
 function Searchbar() {
+  const [doctors, setDoctors] = useState([])
+  const [result, setResult] = useState([])
+  const getDoctors = async () => {
+    try {
+      const { data } = await Axios.get('user/getAlldoctor', { withCredentials: true })
+      setDoctors(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const [searctText,setSearch]=useState()
+
+  useEffect(() => {
+    getDoctors()
+  }, [])
+
+  const search = () => {
+    const Result = doctors.filter((el) => {
+      return el.doctorName.toLowerCase().includes(searctText.toLowerCase())
+      
+    })
+    setResult(Result)
+  }
   return (
-    <div className='2xl:mx-96 xl:mx-64 2xl:w-96 xl:w-96 lg:w-72 md:w-64 sm:w-56'>
+    <div className='2xl:mx-96 xl:mx-64 2xl:w-96 xl:w-96 lg:w-72 md:w-64 sm:w-56 sm:mx-24 my-3'>
+
+      <Input color="teal" label="Search" className="dark:text-white"  onChange={(e)=>{
+        setSearch(e.target.value)
+        search()
+      }} />
+
+      <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+
+        { result.map((e) => {
+        return  (
+          searctText ?
+           <div key={e.UUID}>
+        <li className="pb-3 sm:pb-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+
+                </p>
+                <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                 {e.doctorName}
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                $320
+              </div>
+            </div>
+          </li>
+    </div>:'')
         
-    <div className="m-3">
-      <div className="relative flex flex-wrap items-stretch">
-        <input
-          type="search"
-          className="relative m-0 block w-[1px] min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="button-addon2" />
-    
-       {/* search icon */}
-       <button className="bg-gray-100">
-         <span
-          className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
-          id="basic-addon2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="h-5 w-5">
-            <path
-              fillRule="evenodd"
-              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-              />
-          </svg>
-        </span>
-       </button>
-       
-      </div>
-    </div>
-    
+        })}
+
+      </ul>
+
+
     </div>
   )
 }

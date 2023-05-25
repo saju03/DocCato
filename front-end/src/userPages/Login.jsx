@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import swal from "sweetalert";
 import validator from 'validator'
+import ForgotPage from "../components/forgotpage/ForgotpasswordModal";
 
 function Login() {
   // function for add class to the image on signin page
@@ -96,13 +97,18 @@ function Login() {
     }
   };
 
+  const forgotPassword = (e)=>{
+    e.preventDefault()
+
+  }
+
   useEffect(() => {
     verifyUser();
   }, []);
 
   return (
-    <>
-      <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+   
+      <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0" >
         <div className={width <= 1200 ? "hidden" : " flex w-2/6 dark:hidden"} >
           <img
             src="/loginSignup.png"
@@ -127,7 +133,7 @@ function Login() {
                 <input
                   type="email"
                   name="email"
-                  id="email"
+                  
                   value={loginDetails.email}
                   onChange={(e) => {
                     setDetails({
@@ -138,6 +144,7 @@ function Login() {
                   }}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@mail.com"
+                 
                 />
                 <span className="text-red-600">{validationErr.email}</span>
               </div>
@@ -167,12 +174,8 @@ function Login() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-start"></div>
-                <Link
-                  href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-gray-100"
-                >
-                  Forgot password?
-                </Link>
+              
+                <ForgotPage />
               </div>
               <button
                 type="submit"
@@ -183,7 +186,7 @@ function Login() {
               <span className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don`t have an account yet ? </span>
               <Link
-                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                className="font-medium text-primary-600 hover:underline dark:text-blue-500"
                 to={"/register"}
               >
                 Register
@@ -193,7 +196,7 @@ function Login() {
           </div>
         </div>
       </div>
-    </>
+   
   );
 }
 

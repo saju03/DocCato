@@ -4,7 +4,7 @@ const findUser = async (id) => {
     try {
         const user = await User.findById(id)
         if (user) {
-            return ({ status: true, name: user.userName, email: user.email })
+            return ({ status: true, name: user.userName, email: user.email ,img:user.profileImage})
         } else {
            return ({ status: false })
         }

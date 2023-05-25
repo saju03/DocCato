@@ -4,7 +4,6 @@ const findDoc = async (id) => {
 
     try {
         const doctor = await Doctor.findById(id)
-        console.log(doctor);
         if (doctor) {
             return ({ status: true, name: doctor.doctorName, email: doctor.email ,access:doctor.doctorAccess})
         } else {

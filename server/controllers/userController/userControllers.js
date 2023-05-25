@@ -4,6 +4,8 @@ import userAuthentication from '../../middlewares/userAuthentication.js';
 import jwt from 'jsonwebtoken';
 import verifyEmail from '../../interactors/userIntractor/emailVerificationIntractor.js';
 import { __dirname } from '../../index.js';
+import updateProfileIntractor from '../../interactors/userIntractor/updateProfileIntractor.js';
+import forgorPasswordRecovery from '../../interactors/userIntractor/forgotPasswordRecoveryIntractor.js';
 
 const addUser = async (req, res, next) => {
     const { userName, email, password } = req.body
@@ -36,8 +38,9 @@ const addUser = async (req, res, next) => {
 const authenticateUser = async (req, res, next) => {
 
     const user = await userAuthentication(req.cookies.user_jwt)
+    console.log(user);
     if (user) {
-        res.status(200).json({ message: 'user authentication success ', status: true, name: user.name, email: user.email })
+        res.status(200).json({ message: 'user authentication success ', status: true, name: user.name, email: user.email,phone:user?.phone,profileImage:user?.img })
     } else {
         res.status(401).json({ error: 'Unauthorized', status: false });
     }
@@ -122,4 +125,32 @@ const verifyUser = async (req, res, next) => {
 
 
 }
-export { addUser, userLogin, authenticateUser, verifyUser }
+
+const updateProfile= async (req,res,next)=>{
+        const token = req.cookies.user_jwt
+     const {name,phone} = req.body 
+     
+     const image = req.files[0].filename
+     console.log(image);
+      const updatedProfile = await updateProfileIntractor(name,phone,image,token) 
+     if(updatedProfile.status){
+        res.status(200).json({status:true,message:'profile updated successfully'})
+     }
+     else{
+        res.status(500).json({message:'update failed'})
+     }
+ }
+
+ const forgotPasswordRecovery =async (req,res,next)=>{
+
+    const passwordRecovery =await forgorPasswordRecovery(req.body.email)
+    if(passwordRecovery.status){
+        res.status(200).json(passwordRecovery)
+    }else{
+        res.status(500)
+    }
+ }
+ 
+
+
+export { addUser, userLogin, authenticateUser, verifyUser ,updateProfile,forgotPasswordRecovery}
