@@ -11,7 +11,6 @@ const createUser = async (username,email,password)=>{
 
 
  const addedUser = await userPersistance(username,email,hashedPassword)
- console.log(addedUser);
  if(addedUser.status){
     const emailverify = await sendMail(addedUser.email,addedUser.UUID)
     const token =  createToken(addedUser.id)

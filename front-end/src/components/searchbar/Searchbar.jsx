@@ -24,7 +24,7 @@ function Searchbar() {
 
   const search = () => {
     const Result = doctors.filter((el) => {
-      return el.doctorName.toLowerCase().includes(searctText.toLowerCase())
+      return (el?.doctorName?.toLowerCase().includes(searctText.toLowerCase())||el?.speciality?.toLowerCase().includes(searctText.toLowerCase()))
       
     })
     setResult(Result)

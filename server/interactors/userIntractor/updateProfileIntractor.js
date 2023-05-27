@@ -3,6 +3,7 @@ import updateProfilePersistance from "../../persistence/userLayer/updateProfileP
 
 const updateProfileIntractor = async  (name,phone,image,token)=>{
     const {id} = await jwt.decode(token)
+
  
     const profileUpdate = await updateProfilePersistance(name,phone,image,id)
     if(profileUpdate.status){

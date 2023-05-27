@@ -1,7 +1,28 @@
 import { Button, Navbar } from "flowbite-react"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { Link, useNavigate } from "react-router-dom"
 
 function AdminNav() {
+  // eslint-disable-next-line no-unused-vars
+  const [cookies, setCookie , removeCookie] = useCookies();
+  const navigate = useNavigate()
+  const [adminLoggedIn,setLoggedIn] = useState('Login')
+
+
+  const handleLogout = (e)=>{
+    e.preventDefault()
+    removeCookie('admin_jwt')
+    navigate('/admin/login')
+    setLoggedIn('Login')
+  }
+
+  useEffect(()=>{
+    if(cookies.admin_jwt){
+      setLoggedIn('Logout')
+    }
+  },[])
+
   return (
 <Navbar
   fluid={true}
@@ -9,13 +30,13 @@ function AdminNav() {
 >
   <Navbar.Brand >
 
-    <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+    <span className="self-center whitespace-nowrap text-sm font-semibold dark:text-white">
       DOCATO ADMIN
     </span>
   </Navbar.Brand>
   <div className="flex md:order-2">
-    <Button>
-     LOGOUT
+    <Button onClick={handleLogout}>
+    {adminLoggedIn}
     </Button>
     <Navbar.Toggle />
   </div>
@@ -31,6 +52,9 @@ function AdminNav() {
     </Link>
     <Link to={"/admin/applications"}  className="dark:text-white">
       Applications
+    </Link>
+    <Link to={"/admin/speciality"}  className="dark:text-white">
+      Speciality
     </Link>
 
   </Navbar.Collapse>

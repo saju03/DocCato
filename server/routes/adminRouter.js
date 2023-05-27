@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLogin, blockUserByEmail, getAllApplications, getAllDoctor, getAllUsers, updateApplication, verifyAdmin } from '../controllers/adminController/adminController.js';
+import { addSpeciality, adminLogin, blockUserByEmail, getAllApplications, getAllDoctor, getAllSpecialization, getAllUsers, updateApplication, verifyAdmin } from '../controllers/adminController/adminController.js';
 const router = express.Router()
 
 
@@ -11,4 +11,6 @@ router.get('/get-all-doctors',getAllDoctor)
 router.get('/get-all-application',getAllApplications)
 router.post('/application-update',updateApplication)
 router.post('/block-user',blockUserByEmail)
+router.post('/add-speciality',addSpeciality)
+router.get('/get-all-specializations',getAllSpecialization)
 export {router as adminRoutes}

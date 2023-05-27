@@ -1,6 +1,6 @@
 const handelErrors = (err) =>{
 
-    console.log(err);
+
     let errors ={email:'',password:''}
 
     if(err.code===11000){

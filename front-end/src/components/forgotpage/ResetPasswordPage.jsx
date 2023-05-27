@@ -1,10 +1,11 @@
 import { Button, Label, TextInput } from "flowbite-react"
 import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import swal from "sweetalert"
 import Axios from "../../../axios"
 
 function ResetPasswordPage() {
+    const navigate = useNavigate()
     const params = useParams()
     const[password,setPassword]= useState()
     const[confirmPassword,setConfirmPassword]= useState()
@@ -22,23 +23,34 @@ const passwordCheck = (e)=>{
         setErr({...err,passwordErr:'password should be 5 or more letter'})
     }else{
         setErr({...err,passwordErr:''})
-        try {
-            // const {data} = Axios.post('/user/passwordRecovery',{password,})
-        } catch (error) {
-         console.log(error);   
-        }
+        
     }
 
   
     
 }
 
-const handleSubmit = (e)=>{
+const handleSubmit =async (e)=>{
     e.preventDefault()
     if(password!==confirmPassword){
         setErr({...err,confirmPasswordErr:'both password should be same'})
     }else{
-        swal('oe')
+
+
+        try {
+        const {data} = await Axios.post('/user/passwordRecovery',{password,params},{withCredentialsa:false})
+
+        if(data.status){
+
+            swal(data.message)
+            navigate('/login')
+        }else{
+            swal('error encounterd please try again')
+            navigate('/login')
+        }
+        } catch (error) {
+         console.log(error);   
+        }
         setErr({...err,confirmPasswordErr:''})
     }
 

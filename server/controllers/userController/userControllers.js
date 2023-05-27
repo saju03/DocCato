@@ -6,6 +6,7 @@ import verifyEmail from '../../interactors/userIntractor/emailVerificationIntrac
 import { __dirname } from '../../index.js';
 import updateProfileIntractor from '../../interactors/userIntractor/updateProfileIntractor.js';
 import forgorPasswordRecovery from '../../interactors/userIntractor/forgotPasswordRecoveryIntractor.js';
+import resetPasswordIntractor from '../../interactors/userIntractor/resetPasswordIntractor.js';
 
 const addUser = async (req, res, next) => {
     const { userName, email, password } = req.body
@@ -38,8 +39,7 @@ const addUser = async (req, res, next) => {
 const authenticateUser = async (req, res, next) => {
 
     const user = await userAuthentication(req.cookies.user_jwt)
-    console.log(user);
-    if (user) {
+      if (user) {
         res.status(200).json({ message: 'user authentication success ', status: true, name: user.name, email: user.email,phone:user?.phone,profileImage:user?.img })
     } else {
         res.status(401).json({ error: 'Unauthorized', status: false });
@@ -128,11 +128,15 @@ const verifyUser = async (req, res, next) => {
 
 const updateProfile= async (req,res,next)=>{
         const token = req.cookies.user_jwt
+     
      const {name,phone} = req.body 
      
-     const image = req.files[0].filename
-     console.log(image);
-      const updatedProfile = await updateProfileIntractor(name,phone,image,token) 
+let image
+      if(req.files[0])
+      { image = req.files[0].filename}
+      else{image = req.body.image}
+
+       const updatedProfile = await updateProfileIntractor(name,phone,image,token) 
      if(updatedProfile.status){
         res.status(200).json({status:true,message:'profile updated successfully'})
      }
@@ -150,7 +154,18 @@ const updateProfile= async (req,res,next)=>{
         res.status(500)
     }
  }
+
+ const resetPassword = async (req,res,next)=>{
+    const {password,params} = req.body
+    const recoveryPassword =await resetPasswordIntractor(params.id,password)
+    if(recoveryPassword.status){
+        res.status(200).json({status:true,message:'password has been updated'})
+    }
+    else{
+        res.status(500)
+    }
+ }
  
 
 
-export { addUser, userLogin, authenticateUser, verifyUser ,updateProfile,forgotPasswordRecovery}
+export { addUser, userLogin, authenticateUser, verifyUser ,updateProfile,forgotPasswordRecovery,resetPassword}

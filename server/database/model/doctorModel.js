@@ -25,6 +25,9 @@ const doctorSchema = new Schema({
         type: String,
         required: [true, 'password is required']
     },
+    speciality: {
+        type: String,
+       },
     verified: {
         type: Boolean,
        default:false

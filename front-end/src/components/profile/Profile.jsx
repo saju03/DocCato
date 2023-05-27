@@ -41,7 +41,6 @@ useEffect(()=>{
 verifyUser()
 },[])
   const userDetails = useSelector(store => store.user); 
-  console.log(userDetails);
   return (
     <>
       <section className="relative block h-[50vh]">
@@ -112,7 +111,7 @@ verifyUser()
                   </Typography>
                 </div>
               
-                 <UpdateProfile/>
+                 <UpdateProfile {...userDetails}/>
                
               </div>
 

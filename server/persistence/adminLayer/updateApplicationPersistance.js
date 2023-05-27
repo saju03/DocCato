@@ -11,7 +11,7 @@ const updateApplication = async (id,approved)=>{
             if(application){
                 console.log(application.refId);
          
-                const doctor  = await Doctor.findByIdAndUpdate(application.refId,{consultPermission:true})
+                const doctor  = await Doctor.findByIdAndUpdate(application.refId,{consultPermission:true,speciality:application.speciality},{upsert:true})
                 console.log(doctor);
                 if(doctor){
                     return {status:true,Approved:true,email:doctor.email}

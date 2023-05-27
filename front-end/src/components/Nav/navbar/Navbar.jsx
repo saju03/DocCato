@@ -7,26 +7,13 @@ import { useSelector } from 'react-redux';
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 
 
-
-
-
 function UserNavbar() {
 
 const userDetails = useSelector(store => store.user); 
 const navigate = useNavigate();
 const [cookies, setCookie , removeCookie] = useCookies();
 const[userLoggedIn,setUserLogged] = useState(false)
-const[isDoc,setDoc] = useState(false)
 
-
-useEffect(()=>{
-  if(location.pathname.includes('/doctor')){
-    setDoc(true)
-  }else{
-    setDoc(false)
-  }
-
-},[])
 
 
 useEffect(()=>{
@@ -36,10 +23,6 @@ useEffect(()=>{
 },[])
 
 
-  const handleLoginBtn = (e)=>{
-    e.preventDefault()
-    navigate('/login')
-    }
 
     const handleLogOutBtn = ()=>{
       removeCookie('user_jwt')
@@ -84,7 +67,7 @@ useEffect(()=>{
         Earnings
       </Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item>
+      <Dropdown.Item onClick={handleLogOutBtn}>
         Sign out
       </Dropdown.Item>
     </Dropdown>
@@ -95,10 +78,6 @@ useEffect(()=>{
   <div>
     <Navbar.Toggle />
   </div> }
-
-
-
-
 
   <Navbar.Collapse>
     <Link
@@ -125,7 +104,11 @@ useEffect(()=>{
   </span>
 </button>:''}
   </Navbar.Collapse>
-</Navbar>  )
+
+</Navbar>  
+
+
+)
 }
 
 export default UserNavbar

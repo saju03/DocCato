@@ -6,7 +6,7 @@ const updateProfilePersistance =async (name,phone,image,id)=>{
         if(user){
             return {status:true,}
         }
-        return{status:false ,message:'no user update failed'}
+        return{status:false ,message:'no user update failed' }
     } catch (error) {
         
     }

@@ -37,6 +37,7 @@ const userSchema = new Schema({
      },
      phone:{
         type:Number,
+        default:''
   
      },
 

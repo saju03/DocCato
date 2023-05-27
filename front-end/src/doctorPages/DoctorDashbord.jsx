@@ -3,8 +3,8 @@ import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import Profile from '../components/profile/Profile';
-import ResetPasswordPage from '../components/forgotpage/ResetPasswordPage';
+
+import Carousel from '../components/doctorCarousel/Carousel';
 
 function DoctorDashbord() {
   const [cookies, setCookies, removeCookie] = useCookies();
@@ -41,8 +41,8 @@ function DoctorDashbord() {
 
   return (
     <div >
-     
-   <ResetPasswordPage/>
+      <Carousel/>
+
     </div>
   )
 }

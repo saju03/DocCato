@@ -7,7 +7,7 @@ try {
  
  
     const doctor = await Doctor.findOne({UUID:id.uuid})
-    console.log(doctor);
+
     if(user){
         await User.findOneAndUpdate({UUID:id.uuid},{verified:true})
         return {status:true,id:user.id,isDoc:false}

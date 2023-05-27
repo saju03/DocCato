@@ -14,8 +14,9 @@ import AdminLogin from './adminPages/AdminLogin'
 import DoctorTables from './components/tables/doctorTable/DoctorTable'
 import ApplicationTable from './components/tables/applicationTables/ApplicationTable'
 import Profile from './components/profile/Profile'
-import DocNavbars from './doctorPages/docNav/DocNavbar'
+import DocNavbars from './components/Nav/docNav/DocNavbar'
 import ResetPasswordPage from './components/forgotpage/ResetPasswordPage'
+import SpecilizationTable from './components/tables/speciliationTable/SpecilizationTable'
 
 
 function App() { 
@@ -118,6 +119,10 @@ function App() {
             {
               path:'/admin/applications',
               element:<ApplicationTable/>
+            },
+            {
+              path:'/admin/speciality',
+             element:<SpecilizationTable/>
             }
         ]
     }

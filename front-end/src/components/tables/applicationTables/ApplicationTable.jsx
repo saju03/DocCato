@@ -9,7 +9,6 @@ import {
   } from "@material-tailwind/react";
   import PropTypes, { any } from 'prop-types';
   import axios from "axios";
-  import swal from "sweetalert";
   import { useEffect, useState } from "react";
 import ApplicationModal from "../../modal/ApplicationModal";
 

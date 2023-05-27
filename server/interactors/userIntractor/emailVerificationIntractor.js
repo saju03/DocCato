@@ -5,7 +5,6 @@ import createToken from "../Helpers/tokenGenerator.js";
 verifyUserByuid
 const verifyEmail =async (uid)=>{
  const verification = await verifyUserByuid(uid);
- console.log(verification);
  if(verification.status){
     if(verification.isDoc){
       const Token = await createToken(verification.id)
