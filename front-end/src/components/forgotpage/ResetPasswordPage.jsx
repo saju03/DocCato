@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import swal from "sweetalert"
 import Axios from "../../../axios"
+import { RiseLoader } from "react-spinners"
 
 function ResetPasswordPage() {
     const navigate = useNavigate()
@@ -13,6 +14,7 @@ function ResetPasswordPage() {
         passwordErr:'',
         confirmPasswordErr:''
     })
+    const [loading,setLoading] = useState(false)
 const passwordCheck = (e)=>{
     console.log(params);
     setPassword(e.target.value)
@@ -38,8 +40,9 @@ const handleSubmit =async (e)=>{
 
 
         try {
+          setLoading(true)
         const {data} = await Axios.post('/user/passwordRecovery',{password,params},{withCredentialsa:false})
-
+          setLoading(false)
         if(data.status){
 
             swal(data.message)
@@ -58,7 +61,12 @@ const handleSubmit =async (e)=>{
 
 
   return (
-    <div className="max-w-xl mx-auto">
+<>
+    <div className={`fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 ${!loading ? 'hidden':''}`}>
+    <RiseLoader color="#63ecd0" className='my-auto mx-auto'/>
+</div>
+
+    <div className={`max-w-xl mx-auto ${loading ? 'blur-md':''}`}>
         <form className="flex flex-col gap-4 justify" onSubmit={handleSubmit}>
   <div>
     <div className="mb-2 block">
@@ -97,6 +105,7 @@ const handleSubmit =async (e)=>{
   </Button>
 </form>
     </div>
+    </>
   )
 }
 

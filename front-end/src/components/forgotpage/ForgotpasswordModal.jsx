@@ -12,14 +12,18 @@ import {
 import { Link } from "react-router-dom";
 import Axios from "../../../axios";
 import swal from "sweetalert";
+import { RiseLoader } from "react-spinners";
  
 export default function ForgotPage() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   const[email,setEmail] = useState('')
+  const [loading,setLoading] = useState(false)
   const handleSubmit =async (e)=>{
     e.preventDefault()
+    setLoading(true)
     const {data} = await Axios.post('user/forgot-password-recovery',{email},{withCredentials:true})
+    setLoading(false)
     if(data.status){
       swal(data.message)
     }
@@ -27,7 +31,11 @@ export default function ForgotPage() {
 
   return (
     <React.Fragment>
-      <Link onClick={handleOpen} className="text-sm font-medium text-primary-600 hover:underline dark:text-gray-100">forgot password ?</Link>
+        <div className={`fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 ${!loading ? 'hidden':''}`}>
+    <RiseLoader color="#63ecd0" className='my-auto mx-auto'/>
+</div>
+
+      <Link onClick={handleOpen} className={`text-sm font-medium text-primary-600 hover:underline dark:text-gray-100 ${loading ? 'blur-md':''}`}>forgot password ?</Link>
       <Dialog
         size="lg"
         open={open}

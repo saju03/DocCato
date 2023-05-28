@@ -6,8 +6,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setUserProfile } from "../../utils/UserSlice";
-import Axios from "../../../axios";
+import { setUserProfile } from "../../../utils/UserSlice";
+import Axios from "../../../../axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import UpdateProfile from "./UpdateProfileModal";

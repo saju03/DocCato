@@ -1,14 +1,17 @@
 import  { useState } from 'react'
+// eslint-disable-next-line no-unused-vars
 import { Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import '../index.css'
 import swal from 'sweetalert';
-
+import {  RiseLoader } from "react-spinners";
 
 function Register ()  {
-    const navigate = useNavigate()
+
+    
  const [width, setWidth] = useState(window.innerWidth)
  const [isDoc,setDoc] = useState(false)
+ const [loading,setLoading] = useState(false)
 
     window.addEventListener('resize', function(){
         setWidth(window.innerWidth)
@@ -36,20 +39,24 @@ function Register ()  {
     else{
         try {
             if(isDoc){   
+                setLoading(true)
                 const  {data}  = await axios.post('http://localhost:3000/doctor/register',{...userValues},{withCredentials:true})
                
                 if(data.created){
+                    setLoading(false)
                     swal(data.message)
                    setValues({email:"",password:"",userName:''})
+                   
                 }
-            }else{
-                console.log('user');
-                
+               
+            }else{       
+                setLoading(true)       
                 const  {data}  = await axios.post('http://localhost:3000/user/register',{...userValues},{withCredentials:true})
                 if(data.created){
                    swal(data.message)
                    setValues({email:"",password:"",userName:''})
                 }
+                setLoading(false)
              }
             
             
@@ -68,7 +75,16 @@ function Register ()  {
   return (
     
 <>
-  <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+
+
+
+
+  <div className={`fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 ${!loading ? 'hidden':''}`}>
+    <RiseLoader color="#63ecd0" className='my-auto mx-auto'/>
+</div>
+
+  <div  className={`flex items-center justify-center px-6 py-8 mx-auto ${loading ? 'blur-md':''} md:h-screen lg:py-0`}>
+
       <div className={width <= 1200 ? "hidden" : " flex w-3/6 "}>
         <img src="/pngsignup.png" className='loginImg' alt="" />
       </div>

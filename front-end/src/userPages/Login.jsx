@@ -7,6 +7,8 @@ import axios from "axios";
 import swal from "sweetalert";
 import validator from 'validator'
 import ForgotPage from "../components/forgotpage/ForgotpasswordModal";
+import { RiseLoader } from "react-spinners";
+import Axios from "../../axios";
 
 function Login() {
   // function for add class to the image on signin page
@@ -26,7 +28,7 @@ function Login() {
   const navigate = useNavigate();
   const [width, setWidth] = useState(window.innerWidth);
   const [cookies, setCookies, removeCookie] = useCookies();
-
+  const [loading,setLoading] = useState(false)
   const [loginDetails, setDetails] = useState({
     email: "",
     password: "",
@@ -47,13 +49,13 @@ function Login() {
     if (validator.isEmail(loginDetails.email) && validationErr.email === '' && validationErr.password === '' && loginDetails.password !== "") {
 
       try {
-          
-        const { data } = await axios.post(
-            "http://localhost:3000/user/login",
+          setLoading(true)
+        const { data } = await Axios.post(
+            "user/login",
             { ...loginDetails },
             { withCredentials: true }
           );
-          console.log(data);
+          setLoading(false)
           if (data.status) {
             
             if(data.isDoc){
@@ -82,9 +84,11 @@ function Login() {
     const jwt = cookies;
     if (jwt.user_jwt) {
       try {
+        setLoading(true)
         const { data } = await axios.get("http://localhost:3000/user", {
           withCredentials: true,
         });
+        setLoading(false)
         if (data.status) {
           navigate("/");
         } else {
@@ -97,18 +101,17 @@ function Login() {
     }
   };
 
-  const forgotPassword = (e)=>{
-    e.preventDefault()
-
-  }
-
   useEffect(() => {
     verifyUser();
   }, []);
 
   return (
-   
-      <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0" >
+   <>
+     <div className={`fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 ${!loading ? 'hidden':''}`}>
+    <RiseLoader color="#63ecd0" className='my-auto mx-auto'/>
+</div>
+
+      <div className={`flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ${loading ? 'blur-md':''}`} >
         <div className={width <= 1200 ? "hidden" : " flex w-2/6 dark:hidden"} >
           <img
             src="/loginSignup.png"
@@ -196,7 +199,7 @@ function Login() {
           </div>
         </div>
       </div>
-   
+   </>
   );
 }
 
